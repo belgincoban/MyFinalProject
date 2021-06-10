@@ -31,7 +31,7 @@ namespace Business.Concrete
            
         }
 
-        [SecuredOperation("product.add,admin")]
+       [SecuredOperation("product.add")]
         [ValidationAspect(typeof(ProductValidator))]
         [CacheRemoveAspect("IProductService.Get")]
 
@@ -139,6 +139,11 @@ namespace Business.Concrete
             Add(product);
 
             return null;
+        }
+
+        public IDataResult<List<Product>> GetAllByCategoryId(int categoryId)
+        {
+            return new SuccessDataResult<List<Product>>(_productDal.GetAll(p => p.CategoryId == categoryId));
         }
     }
 
